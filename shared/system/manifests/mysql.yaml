@@ -1,0 +1,65 @@
+name: mysql
+type: database
+description: "MySQL Database Server"
+versions:
+  - "8.4"
+  - "8.0"
+  - "5.7"
+install:
+  packages:
+    - name: mysql-server
+      apt: mysql-server
+      dnf: mysql-server
+    - name: mysql-client
+      apt: mysql-client
+      dnf: mysql
+  services:
+    - name: mysql
+      apt: mysql
+      dnf: mysqld
+      action: enable_start
+  steps:
+    - label: "Trigger MySQL service activation"
+      type: run_action
+      action: activate
+    - label: "Trigger MySQL root password configuration"
+      type: run_action
+      action: configure_password
+uninstall:
+  services:
+    - name: mysql
+      apt: mysql
+      dnf: mysqld
+      action: disable_stop
+  packages:
+    - name: mysql-server
+      apt: mysql-server
+      dnf: mysql-server
+    - name: mysql-client
+      apt: mysql-client
+      dnf: mysql
+activate:
+  services:
+    - name: mysql
+      apt: mysql
+      dnf: mysqld
+      action: enable_start
+deactivate:
+  services:
+    - name: mysql
+      apt: mysql
+      dnf: mysqld
+      action: disable_stop
+commands:
+  configure_password:
+    services:
+      - name: mysql
+        apt: mysql
+        dnf: mysqld
+        action: start
+    steps:
+      - label: "Alter MySQL root password and flush privileges"
+        type: sql_exec
+        executable: mysql
+        query: "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{{.Password}}'; FLUSH PRIVILEGES;"
+        ignore_errors: true

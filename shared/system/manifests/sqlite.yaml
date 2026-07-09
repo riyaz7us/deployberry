@@ -1,0 +1,21 @@
+name: sqlite
+type: database
+description: "SQLite Database Engine"
+versions:
+  - "3.46.0"
+  - "3.45.3"
+  - "3.44.2"
+install:
+  packages:
+    - name: sqlite
+      apt: sqlite3
+      dnf: sqlite
+uninstall:
+  packages:
+    - name: sqlite
+      apt: sqlite3
+      dnf: sqlite
+activate:
+  steps: []
+deactivate:
+  steps: []

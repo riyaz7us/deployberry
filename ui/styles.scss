@@ -1,0 +1,65 @@
+
+/* Define Color Palette */
+
+:root {
+    --primary-50: #a8fbf8;
+    --primary-100: #55eee9;
+    --primary-200: #18d6d0;
+    --primary-300: #009893;
+    --primary-400: #006562;
+    --primary-500: #004b49;
+    --primary-600: #003230;
+    --primary-700: #002c2b;
+    --primary-800: #002a21;
+    --primary-900: #001e11;
+    --primary-950: #001817;
+    --surface-0: 255 255 255;
+    --surface-50: 248 250 252;
+    --surface-100: 241 245 249;
+    --surface-200: 226 232 240;
+    --surface-300: 203 213 225;
+    --surface-400: 148 163 184;
+    --surface-500: 100 116 139;
+    --surface-600: 71 85 105;
+    --surface-700: 45 55 72;
+    --surface-800: 30 41 59;
+    --surface-900: 15 23 42;
+    --surface-950: 3 6 23;
+
+    /* Kay Dark Theme Colors (Authentic VSCode Kay Theme) */
+    --kay-bg-primary: #14161a;      /* editor.background */
+    --kay-bg-secondary: #15171b;     /* tab.activeBackground */
+    --kay-bg-secondary-t: #15171b55;     /* tab.activeBackground */
+    --kay-bg-tertiary: #0c0e12;      /* tab.inactiveBackground */
+    --kay-bg-sidebar: #0c0e12;       /* sideBar.background */
+    --kay-accent-primary: #4c5ead;   /* list.focusBackground base */
+    --kay-accent-secondary: #3c7eeb; /* focusBorder base */
+    --kay-accent-muted: #333470;     /* editor.selectionBackground */
+    --kay-text-primary: #8599b3;     /* editor.foreground */
+    --kay-text-secondary: #ffffff76; /* activityBar.foreground */
+    --kay-text-muted: #ffffff42;     /* tab.inactiveForeground */
+    --kay-text-sidebar: #ffffffcc;   /* sideBar.foreground */
+    --kay-border: #ffffff12;         /* editorGroup.border */
+    --kay-border-light: #ffffff10;   /* tab.border */
+    --kay-border-input: #b0b1d80f;   /* input.border */
+    --kay-hover: rgba(176, 177, 216, 0.08); /* list.hoverBackground */
+    --kay-selection: rgba(76, 94, 173, 0.35); /* list.focusBackground with transparency */
+    --kay-scrollbar: rgba(255, 255, 255, 0.06); /* scrollbarSlider.background */
+    --kay-scrollbar-hover: rgba(255, 255, 255, 0.1); /* scrollbarSlider.hoverBackground */
+}
+
+@layer base {
+	h1 {
+		@apply text-2xl font-bold;
+	}
+
+	h2 {
+		@apply text-xl font-bold;
+	}
+
+	h3 {
+		@apply text-lg font-bold;
+	}
+}
+
+/* Custom theme styles - now using DaisyUI themes */

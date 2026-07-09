@@ -1,0 +1,37 @@
+name: golang
+type: runtime
+description: "Go Programming Language"
+versions:
+  - "1.24"
+  - "1.23"
+  - "1.22"
+  - "1.21"
+  - "1.20"
+install:
+  steps:
+    - label: "Install g version manager"
+      type: cmd
+      command: bash
+      args: ["-c", "curl -sSL https://raw.githubusercontent.com/voidint/g/master/install.sh | bash"]
+    - label: "Register g paths in globals environment file"
+      type: file_append
+      file: "{{.EnvPath}}"
+      block: |
+        export G_DIR="$HOME/.g"
+        export PATH="$HOME/.g/bin:$HOME/.g/go/bin:$PATH"
+    - label: "Install Go version {{.Version}}"
+      type: cmd
+      command: bash
+      args: ["-c", "source {{.EnvPath}} && g install {{.Version}}"]
+activate:
+  steps:
+    - label: "Activate Go version {{.Version}}"
+      type: cmd
+      command: bash
+      args: ["-c", "source {{.EnvPath}} && g use {{.Version}}"]
+uninstall:
+  steps:
+    - label: "Uninstall Go version {{.Version}}"
+      type: cmd
+      command: bash
+      args: ["-c", "source {{.EnvPath}} && g uninstall {{.Version}}"]

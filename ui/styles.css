@@ -1,0 +1,174 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: silk --default, night --prefersdark, caramelatte,cupcake, lemonade,luxury,dracula,sunset;
+}
+
+html {
+	font-family: "Open Sans", sans-serif;
+	line-height: 1.5;
+	font-size: 18px;
+	overflow-x: clip !important;
+	scroll-behavior: smooth;
+	background:ghostwhite;
+}
+
+.m-btn.--primary:not(.normal){
+	box-shadow:0 4px 5px 0 rgba(36, 87, 255, 0.5) !important;
+}
+.m-btn{
+	border-radius: 4px !important;
+}
+.m-btn.--primary{
+	background:#1560bd;
+}
+
+.ql-editor h2{
+	font-size: 1.5rem;
+	font-weight:bold;
+}
+.ql-editor h3{
+	font-weight:bold;
+}
+.ql-editor{
+	min-height:60vh;
+}
+
+@keyframes slideUp {
+	0%{
+		transform:translateY(40px);
+	}
+	100%{
+		transform:translateY(0px);
+	}
+}
+html.--backdrop-present{
+	overflow-y: auto !important;
+}
+
+.smallBtn{
+	width: 2rem !important;
+	height: 2rem !important;
+	box-shadow: 0 0 4px 0 #ccc;
+	border-radius:5px;
+	}
+.smallBtn2{
+	padding: 0.6rem !important;
+	box-shadow: 0 0 4px 0 #ccc;
+	border-radius:5px;
+	}
+.smallBtn.active{
+	border:1px solid grey;
+}
+
+.border-1{
+	border-width: 1px;
+}
+
+
+@media screen and (min-width:2560px) {
+	body{
+		zoom:1.5;
+	}
+}
+
+.toast{
+	padding:10px;
+	border-radius: 6px;
+	position: fixed;
+	z-index: 999 !important;
+	bottom: 40px;
+	right: 40px;
+	background:black;
+	color:white;
+	font-weight: medium;
+	animation: 0.3s linear slideUp;
+}
+
+.scaleOnce{
+	animation: 1s scaleOnce ease-in;
+}
+@keyframes scaleOnce {
+	from{scale: 0.5;}
+	to{scale:1;}
+}
+
+.fadeOnce{
+	animation: 1s fadeOnce ease-in;
+}
+@keyframes fadeOnce {
+	from{
+		opacity: 0.5;
+		transform: perspective(50px) rotatex(5deg);
+	}
+	to{
+		opacity:1;
+		transform: unset;
+	}
+}
+
+.hidescroll{
+	scrollbar-width:none;
+}
+
+.lightInput label,.lightInput span{
+	color:black !important;
+}
+.lightInput input{
+	border:1px solid black !important;
+}
+
+.lightSelect {
+  border: 1px solid black;
+  overflow: hidden;
+}
+.lightSelect div {
+  color: black;
+  overflow: clip;
+}
+
+
+.p-inputtext:not(.p-dropdown-label){border:1px solid black;}
+.p-inputtext::-webkit-input-placeholder{color:black;}
+.p-inputtext::-moz-placeholder{color:black;}
+
+.minidrop{
+	border:1px solid black;
+	span{
+		padding:10px;
+	}
+	div{color:black;}
+	background: transparent;
+}
+
+.gradient-primary {
+  background-color: #006b52 !important;
+  border-color: #006b52 !important;
+  background-image: linear-gradient(187deg, #001817, #006b52 74%);
+  box-shadow:0 10px 20px -10px #006b52!important;
+}
+.gradient-secondary {
+  background-color: #015b48 !important;
+  border-color: #015b48 !important;
+  background-image: linear-gradient(0deg, #042e21, #015b48 74%);
+  box-shadow:0 10px 20px -10px #015b48!important;
+}
+.gradient-secondary:hover{
+	background-image: linear-gradient(0deg, #01130d, #015b2e 74%);
+	box-shadow:0 10px 40px -10px #015b48!important;
+}
+table,tr{
+	border-collapse: collapse;
+	border-spacing: 0;
+	border-left: 1px solid #777;
+	border-right: 1px solid #777;
+}
+thead,thead tr{
+	color: #000 !important;
+	background-color: #ffffff33 !important;
+}
+th,td{
+	padding:5px;
+	border-top:0.1pt solid #777;
+	border-bottom:0.1pt solid #777;
+	border-collapse: collapse;
+}

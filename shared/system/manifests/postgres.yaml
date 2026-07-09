@@ -1,0 +1,58 @@
+name: postgres
+type: database
+description: "PostgreSQL Database Server"
+versions:
+  - "16.3"
+  - "15.7"
+  - "14.12"
+install:
+  packages:
+    - name: postgresql
+      apt: postgresql
+      dnf: postgresql-server
+    - name: postgresql-contrib
+      apt: postgresql-contrib
+      dnf: postgresql-contrib
+  steps:
+    - label: "Initialize PostgreSQL database directory (RedHat/CentOS only)"
+      type: cmd
+      command: bash
+      args: ["-c", "if command -v postgresql-setup &> /dev/null; then postgresql-setup --initdb; fi"]
+      ignore_errors: true
+    - label: "Trigger PostgreSQL root password configuration"
+      type: run_action
+      action: configure_password
+  services:
+    - name: postgresql
+      action: enable_start
+uninstall:
+  services:
+    - name: postgresql
+      action: disable_stop
+  packages:
+    - name: postgresql
+      apt: postgresql
+      dnf: postgresql-server
+    - name: postgresql-contrib
+      apt: postgresql-contrib
+      dnf: postgresql-contrib
+activate:
+  services:
+    - name: postgresql
+      action: enable_start
+deactivate:
+  services:
+    - name: postgresql
+      action: disable_stop
+commands:
+  configure_password:
+    services:
+      - name: postgresql
+        action: start
+    steps:
+      # Use psql as postgres user to set password
+      - label: "Configure PostgreSQL root password via psql"
+        type: cmd
+        command: bash
+        args: ["-c", "sudo -u postgres psql -c \"ALTER USER postgres PASSWORD '{{.Password}}';\""]
+        ignore_errors: true

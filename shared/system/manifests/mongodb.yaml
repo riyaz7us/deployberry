@@ -1,0 +1,52 @@
+name: mongodb
+type: database
+description: "MongoDB Database Server"
+versions:
+  - "8.0"
+  - "7.0.9"
+  - "6.0.15"
+  - "5.0.26"
+install:
+  steps:
+    - label: "Install MongoDB via APT/DNF repository"
+      type: cmd
+      command: bash
+      args: ["-c", "if command -v apt &> /dev/null; then apt install -y mongodb || apt install -y mongodb-org; elif command -v dnf &> /dev/null; then dnf install -y mongodb-server || dnf install -y mongodb; fi"]
+      ignore_errors: true
+  services:
+    - name: mongodb
+      action: enable_start
+      ignore_errors: true
+    - name: mongod
+      action: enable_start
+      ignore_errors: true
+uninstall:
+  services:
+    - name: mongodb
+      action: disable_stop
+      ignore_errors: true
+    - name: mongod
+      action: disable_stop
+      ignore_errors: true
+  steps:
+    - label: "Uninstall MongoDB packages"
+      type: cmd
+      command: bash
+      args: ["-c", "if command -v apt &> /dev/null; then apt remove --purge -y mongodb mongodb-org; elif command -v dnf &> /dev/null; then dnf remove -y mongodb-server mongodb; fi"]
+      ignore_errors: true
+activate:
+  services:
+    - name: mongodb
+      action: enable_start
+      ignore_errors: true
+    - name: mongod
+      action: enable_start
+      ignore_errors: true
+deactivate:
+  services:
+    - name: mongodb
+      action: disable_stop
+      ignore_errors: true
+    - name: mongod
+      action: disable_stop
+      ignore_errors: true

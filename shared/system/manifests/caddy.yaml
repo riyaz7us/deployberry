@@ -1,0 +1,70 @@
+name: caddy
+type: webserver
+description: "Caddy Web Server"
+install:
+  steps:
+    - label: "Install Caddy via APT/DNF repository"
+      type: cmd
+      command: bash
+      args: 
+        - "-c"
+        - |
+          if command -v apt &> /dev/null; then
+            apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
+            curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+            curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
+            apt update -y
+            apt install -y caddy
+          elif command -v dnf &> /dev/null; then
+            dnf install -y 'dnf-command(copr)'
+            dnf copr enable -y @caddy/caddy
+            dnf install -y caddy
+          fi
+    - label: "Clear port 80"
+      type: kill_port
+      port: 80
+      ignore_errors: true
+    - label: "Clear port 443"
+      type: kill_port
+      port: 443
+      ignore_errors: true
+  services:
+    - name: caddy
+      action: enable_start
+uninstall:
+  services:
+    - name: caddy
+      action: disable_stop
+  steps:
+    - label: "Uninstall Caddy and clean repositories"
+      type: cmd
+      command: bash
+      args:
+        - "-c"
+        - |
+          if command -v apt &> /dev/null; then
+            apt remove --purge -y caddy*
+            rm -f /etc/apt/sources.list.d/caddy-stable.list
+            rm -f /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+          elif command -v dnf &> /dev/null; then
+            dnf remove -y caddy*
+            dnf copr remove -y @caddy/caddy
+          fi
+      ignore_errors: true
+activate:
+  steps:
+    - label: "Clear port 80"
+      type: kill_port
+      port: 80
+      ignore_errors: true
+    - label: "Clear port 443"
+      type: kill_port
+      port: 443
+      ignore_errors: true
+  services:
+    - name: caddy
+      action: start
+deactivate:
+  services:
+    - name: caddy
+      action: stop

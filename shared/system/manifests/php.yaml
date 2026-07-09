@@ -1,0 +1,91 @@
+name: php
+type: runtime
+description: "PHP Server-side Scripting Language"
+versions:
+  - "8.4"
+  - "8.3"
+  - "8.2"
+  - "8.1"
+  - "8.0"
+  - "7.4"
+  - "7.3"
+  - "7.2"
+repositories:
+  - os: apt
+    url: ppa:ondrej/php
+  - os: dnf
+    url: epel-release
+install:
+  packages:
+    - name: php
+      apt: php{{.Version}}
+      dnf: php{{.Version}}
+    - name: php-fpm
+      apt: php{{.Version}}-fpm
+      dnf: php{{.Version}}-php-fpm
+    - name: php-cli
+      apt: php{{.Version}}-cli
+      dnf: php{{.Version}}-php-cli
+    - name: php-mysql
+      apt: php{{.Version}}-mysql
+      dnf: php{{.Version}}-php-mysqlnd
+    - name: php-curl
+      apt: php{{.Version}}-curl
+      dnf: php{{.Version}}-php-curl
+    - name: php-xml
+      apt: php{{.Version}}-xml
+      dnf: php{{.Version}}-php-xml
+    - name: php-zip
+      apt: php{{.Version}}-zip
+      dnf: php{{.Version}}-php-pecl-zip
+    - name: php-mbstring
+      apt: php{{.Version}}-mbstring
+      dnf: php{{.Version}}-php-mbstring
+    - name: php-gd
+      apt: php{{.Version}}-gd
+      dnf: php{{.Version}}-php-gd
+    - name: php-bcmath
+      apt: php{{.Version}}-bcmath
+      dnf: php{{.Version}}-php-bcmath
+    - name: php-intl
+      apt: php{{.Version}}-intl
+      dnf: php{{.Version}}-php-intl
+    {{range .Extensions}}
+    - name: php-{{.}}
+      apt: php{{$.Version}}-{{.}}
+      dnf: php{{$.Version}}-php-{{.}}
+    {{end}}
+  services:
+    - name: php-fpm
+      apt: php{{.Version}}-fpm
+      dnf: php{{.Version}}-php-fpm
+      action: enable_start
+  steps:
+    # Install Composer
+    - label: "Install Composer globally"
+      type: cmd
+      command: bash
+      args: ["-c", "curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && chmod +x /usr/local/bin/composer"]
+      ignore_errors: true
+uninstall:
+  services:
+    - name: php-fpm
+      apt: php{{.Version}}-fpm
+      dnf: php{{.Version}}-php-fpm
+      action: disable_stop
+  packages:
+    - name: php
+      apt: php{{.Version}}*
+      dnf: php{{.Version}}*
+activate:
+  services:
+    - name: php-fpm
+      apt: php{{.Version}}-fpm
+      dnf: php{{.Version}}-php-fpm
+      action: start
+deactivate:
+  services:
+    - name: php-fpm
+      apt: php{{.Version}}-fpm
+      dnf: php{{.Version}}-php-fpm
+      action: stop

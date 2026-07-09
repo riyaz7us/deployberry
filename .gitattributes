@@ -1,0 +1,3 @@
+# Ensure shell scripts always use LF (Unix) line endings to avoid execution failures on WSL/Bash
+*.sh text eol=lf
+panel17-cli text eol=lf

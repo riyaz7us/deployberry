@@ -1,0 +1,45 @@
+name: node
+type: runtime
+description: "Node.js JavaScript Runtime"
+versions:
+  - "26"
+  - "24"
+  - "22"
+  - "20"
+  - "18"
+  - "16"
+  - "14"
+install:
+  steps:
+    - label: "Install NVM (Node Version Manager)"
+      type: cmd
+      command: bash
+      args: ["-c", "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | NVM_DIR=/opt/nvm bash"]
+    - label: "Register NVM paths in globals environment file"
+      type: file_append
+      file: "{{.EnvPath}}"
+      block: |
+        export NVM_DIR="/opt/nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        if command -v nvm &> /dev/null; then
+            nvm use default >/dev/null 2>&1 || true
+        fi
+    - label: "Install Node.js version {{.Version}} & global PM2"
+      type: cmd
+      command: bash
+      args: ["-c", "source /opt/nvm/nvm.sh && nvm install {{.Version}} && nvm use {{.Version}} && nvm alias default {{.Version}} && npm install -g pm2"]
+      env: ["NVM_DIR=/opt/nvm"]
+activate:
+  steps:
+    - label: "Activate Node.js version {{.Version}} and set as default"
+      type: cmd
+      command: bash
+      args: ["-c", "source /opt/nvm/nvm.sh && nvm install {{.Version}} && nvm use {{.Version}} && nvm alias default {{.Version}} && npm install -g pm2"]
+      env: ["NVM_DIR=/opt/nvm"]
+uninstall:
+  steps:
+    - label: "Deactivate and uninstall Node.js version {{.Version}}"
+      type: cmd
+      command: bash
+      args: ["-c", "source /opt/nvm/nvm.sh && nvm deactivate {{.Version}} 2>/dev/null && nvm uninstall {{.Version}}"]
+      env: ["NVM_DIR=/opt/nvm"]

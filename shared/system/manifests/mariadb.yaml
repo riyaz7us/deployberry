@@ -1,0 +1,49 @@
+name: mariadb
+type: database
+description: "MariaDB Database Server"
+versions:
+  - "12.2"
+  - "12.0"
+  - "11.8"
+repositories:
+  - os: apt
+    url: mariadb-server
+install:
+  packages:
+    - name: mariadb-server
+      apt: mariadb-server
+      dnf: mariadb-server
+  steps:
+    - label: "Trigger MariaDB service activation"
+      type: run_action
+      action: activate
+    - label: "Trigger MariaDB root password configuration"
+      type: run_action
+      action: configure_password
+uninstall:
+  services:
+    - name: mariadb
+      action: disable_stop
+  packages:
+    - name: mariadb-server
+      apt: mariadb-server
+      dnf: mariadb-server
+activate:
+  services:
+    - name: mariadb
+      action: enable_start
+deactivate:
+  services:
+    - name: mariadb
+      action: disable_stop
+commands:
+  configure_password:
+    services:
+      - name: mariadb
+        action: start
+    steps:
+      - label: "Alter MariaDB root password and flush privileges"
+        type: sql_exec
+        executable: mysql
+        query: "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{.Password}}'; FLUSH PRIVILEGES;"
+        ignore_errors: true

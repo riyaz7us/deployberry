@@ -1,0 +1,54 @@
+name: redis
+type: database
+description: "Redis In-Memory Database"
+versions:
+  - "7.4"
+  - "7.2"
+  - "7.0"
+  - "6.2"
+install:
+  packages:
+    - name: redis
+      apt: redis-server
+      dnf: redis
+  services:
+    - name: redis
+      apt: redis-server
+      dnf: redis
+      action: enable_start
+uninstall:
+  services:
+    - name: redis
+      apt: redis-server
+      dnf: redis
+      action: disable_stop
+  packages:
+    - name: redis
+      apt: redis-server
+      dnf: redis
+activate:
+  services:
+    - name: redis
+      apt: redis-server
+      dnf: redis
+      action: enable_start
+deactivate:
+  services:
+    - name: redis
+      apt: redis-server
+      dnf: redis
+      action: disable_stop
+commands:
+  configure_password:
+    steps:
+      - label: "Configure requirepass in redis.conf"
+        type: file_replace
+        file: /etc/redis/redis.conf
+        search: '^#?\s*requirepass.*'
+        replace: 'requirepass {{.Password}}'
+        ignore_errors: true
+    services:
+      - name: redis
+        apt: redis-server
+        dnf: redis
+        action: restart

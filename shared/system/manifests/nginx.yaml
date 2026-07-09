@@ -1,0 +1,45 @@
+name: nginx
+type: webserver
+description: "Nginx Web Server"
+install:
+  packages:
+    - name: nginx
+      apt: nginx
+      dnf: nginx
+  steps:
+    - label: "Clear port 80"
+      type: kill_port
+      port: 80
+      ignore_errors: true
+    - label: "Clear port 443"
+      type: kill_port
+      port: 443
+      ignore_errors: true
+  services:
+    - name: nginx
+      action: enable_start
+uninstall:
+  services:
+    - name: nginx
+      action: disable_stop
+  packages:
+    - name: nginx
+      apt: nginx*
+      dnf: nginx*
+activate:
+  steps:
+    - label: "Clear port 80"
+      type: kill_port
+      port: 80
+      ignore_errors: true
+    - label: "Clear port 443"
+      type: kill_port
+      port: 443
+      ignore_errors: true
+  services:
+    - name: nginx
+      action: start
+deactivate:
+  services:
+    - name: nginx
+      action: stop

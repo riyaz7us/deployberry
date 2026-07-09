@@ -1,0 +1,42 @@
+name: python
+type: runtime
+description: "Python Programming Language"
+versions:
+  - "3.12.0"
+  - "3.11.4"
+  - "3.10.0"
+  - "3.9.10"
+  - "3.9.7"
+  - "3.8.5"
+  - "3.7.12"
+  - "3.7.9"
+  - "3.6.15"
+  - "3.6.8"
+  - "2.7.18"
+install:
+  packages:
+    - name: python
+      apt: python3
+      dnf: python3
+    - name: pip
+      apt: python3-pip
+      dnf: python3-pip
+    - name: venv
+      apt: python3-venv
+      dnf: python3-venv
+  steps:
+    - label: "Install pyenv (Python Version Manager)"
+      type: cmd
+      command: bash
+      args: ["-c", "if ! command -v pyenv &> /dev/null && [ ! -d \"$HOME/.pyenv\" ]; then curl -sSL https://pyenv.run | bash; fi"]
+    - label: "Install Python version {{.Version}} via pyenv"
+      type: cmd
+      command: bash
+      args: ["-c", "export PATH=\"$HOME/.pyenv/bin:$PATH\" && eval \"$(pyenv init -)\" && pyenv install -s {{.Version}}"]
+      ignore_errors: true
+activate:
+  steps:
+    - label: "Set global Python version to {{.Version}}"
+      type: cmd
+      command: bash
+      args: ["-c", "export PATH=\"$HOME/.pyenv/bin:$PATH\" && eval \"$(pyenv init -)\" && pyenv global {{.Version}}"]
