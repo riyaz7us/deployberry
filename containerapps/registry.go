@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	RegistryBaseURL = "https://raw.githubusercontent.com/riyaz7us/deployberry-manifests/refs/heads/main/containerapps"
+	RegistryBaseURL = "https://raw.githubusercontent.com/riyaz7us/deployberry-manifests/refs/heads/master/containerapps"
 )
 
 type AppIndexItem struct {

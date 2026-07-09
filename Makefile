@@ -6,15 +6,9 @@ ui:
 	cd ui && pnpm build && pnpm generate
 
 backend:
-	cd deployberry && go build -buildvcs=false -o ../bin/deployberry .
-
-backend-linux:
 	cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ../bin/deployberry-linux-amd64 .
 
 containerapps:
-	cd deployberry && go build -tags containerapps_only -buildvcs=false -o ../bin/containerapps .
-
-containerapps-linux:
 	cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags containerapps_only -buildvcs=false -o ../bin/containerapps-linux-amd64 .
 
 run:

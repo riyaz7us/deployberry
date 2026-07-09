@@ -4,3 +4,5 @@
 build
 .dev
 deployberry-manifests
+bin
+releases

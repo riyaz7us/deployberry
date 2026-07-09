@@ -2,18 +2,18 @@ package appinstaller
 
 import (
 	"bytes"
+	"deployberry/core/applications/appinstaller/manifest"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
-	"deployberry/core/applications/appinstaller/manifest"
 	"shared/globals"
 )
 
 const (
 	// Using raw.githubusercontent.com to get the actual file contents
-	RegistryBaseURL = "https://raw.githubusercontent.com/riyaz7us/deployberry-manifests/refs/heads/main"
+	RegistryBaseURL = "https://raw.githubusercontent.com/riyaz7us/deployberry-manifests/refs/heads/master"
 )
 
 type AppIndexItem struct {

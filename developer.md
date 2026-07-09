@@ -26,7 +26,7 @@ Compiles the core engine, standard dashboard modules (cron, PM2, DB interfaces),
 make backend
 
 # Option 2: Build directly
-cd deployberry && go build -buildvcs=false -o ../bin/deployberry .
+cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ../bin/deployberry-linux-amd64 .
 ```
 
 ### 2. Build Standalone ContainerApps Daemon
@@ -36,7 +36,7 @@ Compiles only the containerapps routes and basic daemon, pruning all standard da
 make containerapps
 
 # Option 2: Build directly
-cd deployberry && go build -tags containerapps_only -o ../bin/containerapps .
+cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags containerapps_only -buildvcs=false -o ../bin/containerapps-linux-amd64 .
 ```
 
 ### 3. Running in Development
@@ -275,7 +275,7 @@ Deploys compose template or docker image, binds host ports, and deploys reverse 
 Application manifests are YAML files defined inside [deployberry-manifests](https://github.com/riyaz7us/deployberry-manifests) which describe runtime, package requirements, build/installation steps, and process configurations.
 
 The master reference for the manifest format and its keys is:
-- [manifest.schema.yaml](https://github.com/riyaz7us/deployberry-manifests/blob/main/manifest.schema.yaml)
+- [manifest.schema.yaml](https://github.com/riyaz7us/deployberry-manifests/blob/master/manifest.schema.yaml)
 
 ### System Variables Reference
 
@@ -301,6 +301,6 @@ During installation, updating, or running actions, several variables are automat
 ### Brief Instruction for Writing Manifests
 
 1. **Use matching file names**: Place your manifest in the registry directory [deployberry-manifests](https://github.com/riyaz7us/deployberry-manifests) named as `<slug>.manifest.yaml` where `<slug>` matches the `name` field in the manifest.
-2. **Register the Manifest**: Append a corresponding JSON object with matching `slug` to [index.json](https://github.com/riyaz7us/deployberry-manifests/blob/main/index.json).
+2. **Register the Manifest**: Append a corresponding JSON object with matching `slug` to [index.json](https://github.com/riyaz7us/deployberry-manifests/blob/master/index.json).
 3. **Configure Custom Ports**: For proxy applications (e.g. Node, Python), include the `APP_PORT` key in variables. This permits user-configurable routing, which overrides the webserver proxy configuration and provides `{APP_PORT}` to your startup process scripts.
 

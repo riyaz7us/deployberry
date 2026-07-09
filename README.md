@@ -19,7 +19,7 @@ DeployBerry is an easy-to-use control panel designed to help you host and manage
 To install DeployBerry on your Linux server, run the quick install script as root:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/riyaz7us/deployberry/main/install.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/riyaz7us/deployberry/master/install.sh | sudo bash
 ```
 
 This script will automatically:
