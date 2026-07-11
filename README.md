@@ -1,6 +1,10 @@
-# DeployBerry - Simple Application & Server Control Panel
+# DeployBerry™ - Simple Application & Server Control Panel
 
-DeployBerry is an easy-to-use control panel designed to help you host and manage websites, databases, and apps on your server without needing complex shell scripting. Whether you are running a simple **WordPress blog**, an **Odoo business suite**, or running custom container apps, DeployBerry handles the server setup (Nginx, Caddy, databases, cron jobs, and processes) automatically using straightforward configurations.
+<img src="ui/public/newlogo.svg" alt="DeployBerry Logo" width="240" />
+
+DeployBerry™ is an easy-to-use control panel designed to help you host and manage websites, databases, and apps on your server without needing complex shell scripting. Whether you are running a simple **WordPress blog**, an **Odoo business suite**, or running custom container apps, DeployBerry handles the server setup (Nginx, Caddy, databases, cron jobs, and processes) automatically using straightforward configurations.
+
+<img src="ui/public/screenshot.png" alt="DeployBerry Dashboard Screenshot" />
 
 ---
 
