@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 	"time"
 
-	"shared/repository"
 	"deployberry/utils"
+	"shared/globals"
+	"shared/repository"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -34,7 +36,7 @@ func PerformBackup(database string) error {
 		return fmt.Errorf("failed to get MySQL credentials: %v", err)
 	}
 
-	backupDir := "backups/mysql"
+	backupDir := filepath.Join(globals.BACKUPS_DIR, "mysql")
 	if err := os.MkdirAll(backupDir, 0755); err != nil {
 		return fmt.Errorf("failed to create backup directory: %v", err)
 	}

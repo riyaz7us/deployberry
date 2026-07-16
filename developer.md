@@ -26,7 +26,7 @@ Compiles the core engine, standard dashboard modules (cron, PM2, DB interfaces),
 make backend
 
 # Option 2: Build directly
-cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ../bin/deployberry-linux-amd64 .
+cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags="-s -w" -buildvcs=false -o ../bin/deployberry-linux-amd64 .
 ```
 
 ### 2. Build Standalone ContainerApps Daemon
@@ -36,7 +36,7 @@ Compiles only the containerapps routes and basic daemon, pruning all standard da
 make containerapps
 
 # Option 2: Build directly
-cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags containerapps_only -buildvcs=false -o ../bin/containerapps-linux-amd64 .
+cd deployberry && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -tags containerapps_only -trimpath -ldflags="-s -w" -buildvcs=false -o ../bin/containerapps-linux-amd64 .
 ```
 
 ### 3. Running in Development

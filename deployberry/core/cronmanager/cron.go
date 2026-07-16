@@ -11,22 +11,20 @@ import (
 
 	"deployberry/core/dbops"
 	"deployberry/utils"
-	"shared/repository"
 	cronengine "shared/cronmanager"
+	"shared/globals"
+	"shared/repository"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-var db *gorm.DB
-
 func init() {
-	db = repository.GetDB()
 	// Inject the PerformBackup logic into the cron engine to avoid circular dependencies
 	cronengine.RegisterBackupFunc(dbops.PerformBackup)
 }
 
 func GetBackupCrons(c *gin.Context) {
+	db := repository.GetDB()
 	database := c.Query("database")
 	if database == "" {
 		c.JSON(400, gin.H{"error": "database parameter is required"})
@@ -66,6 +64,7 @@ func CreateBackupCron(c *gin.Context) {
 		return
 	}
 
+	db := repository.GetDB()
 	var existingCron repository.Cron
 	err := db.Where("name = ? AND schedule = ?", req.Database, req.CronString).First(&existingCron).Error
 	if err == nil {
@@ -107,6 +106,7 @@ func DeleteBackupCron(c *gin.Context) {
 		return
 	}
 
+	db := repository.GetDB()
 	err := db.Where("name = ? AND schedule = ?", database, cronString).Delete(&repository.Cron{}).Error
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
@@ -128,7 +128,7 @@ func GetBackupsList(c *gin.Context) {
 		return
 	}
 
-	backupDir := "backups/mysql"
+	backupDir := filepath.Join(globals.BACKUPS_DIR, "mysql")
 	if _, err := os.Stat(backupDir); os.IsNotExist(err) {
 		c.JSON(200, gin.H{"success": true, "backups": []interface{}{}})
 		return
@@ -209,7 +209,8 @@ func RestoreBackupHandler(c *gin.Context) {
 	}
 
 	cleanPath := filepath.Clean(req.BackupFile)
-	if !strings.HasPrefix(cleanPath, filepath.Clean("backups/mysql")) {
+	expectedPrefix := filepath.Clean(filepath.Join(globals.BACKUPS_DIR, "mysql"))
+	if !strings.HasPrefix(cleanPath, expectedPrefix) {
 		c.JSON(400, gin.H{"error": "invalid backup file path"})
 		return
 	}
@@ -260,7 +261,8 @@ func DeleteBackupFile(c *gin.Context) {
 	}
 
 	cleanPath := filepath.Clean(req.BackupFile)
-	if !strings.HasPrefix(cleanPath, filepath.Clean("backups/mysql")) {
+	expectedPrefix := filepath.Clean(filepath.Join(globals.BACKUPS_DIR, "mysql"))
+	if !strings.HasPrefix(cleanPath, expectedPrefix) {
 		c.JSON(400, gin.H{"error": "invalid backup file path"})
 		return
 	}

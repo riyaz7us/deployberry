@@ -5,16 +5,10 @@ import (
 	"shared/repository"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-var db *gorm.DB
-
-func init() {
-	db = repository.GetDB()
-}
-
 func GetAll(c *gin.Context) {
+	db := repository.GetDB()
 	// Get all applications from database
 	var applications []repository.Application
 	err := db.Order("created_at DESC").Find(&applications).Error

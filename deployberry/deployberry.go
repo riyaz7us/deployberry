@@ -16,6 +16,15 @@ var authMiddleware gin.HandlerFunc
 var initCallback func()
 
 func main() {
+	if len(os.Args) > 1 {
+		command := os.Args[1]
+		if !globals.IsDevelopment() && os.Getuid() != 0 {
+			log.Fatal("This program must be run as root")
+		}
+		shell.HandleCommand(command)
+		return
+	}
+
 	if err := os.Chdir(globals.BASE_DIR); err != nil {
 		log.Fatal("Failed to change to app directory: " + err.Error())
 	}
@@ -25,12 +34,6 @@ func main() {
 
 	if !globals.IsDevelopment() && os.Getuid() != 0 {
 		log.Fatal("This program must be run as root")
-	}
-
-	if len(os.Args) > 1 {
-		command := os.Args[1]
-		shell.HandleCommand(command)
-		return
 	}
 
 	// Initialize compiled modules if any
