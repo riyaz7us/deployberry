@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
+	"path"
 	"strings"
 
 	"deployberry/core/applications"
@@ -55,18 +56,31 @@ func init() {
 		fileServer := http.FileServer(http.FS(subFS))
 
 		r.NoRoute(func(c *gin.Context) {
-			path := c.Request.URL.Path
-			if strings.HasPrefix(path, "/api") {
+			reqPath := c.Request.URL.Path
+			if strings.HasPrefix(reqPath, "/api") {
 				c.JSON(http.StatusNotFound, gin.H{"error": "API route not found"})
 				return
 			}
-			f, err := subFS.Open(strings.TrimPrefix(path, "/"))
-			if err == nil {
+			
+			cleanPath := strings.TrimPrefix(path.Clean(reqPath), "/")
+			
+			// 1. SSG/Nuxt route match (e.g. /login -> login/index.html)
+			// This also perfectly handles the root "/" request (cleanPath="") -> "index.html"
+			if data, err := fs.ReadFile(subFS, path.Join(cleanPath, "index.html")); err == nil {
+				c.Data(http.StatusOK, "text/html; charset=utf-8", data)
+				return
+			}
+
+			// 2. Exact file match for static assets (e.g. /_nuxt/app.js)
+			if f, err := subFS.Open(cleanPath); err == nil && cleanPath != "" {
 				f.Close()
 				fileServer.ServeHTTP(c.Writer, c.Request)
 				return
 			}
-			c.FileFromFS("index.html", http.FS(subFS))
+			
+			// 3. SPA dynamic route fallback (serve root index.html)
+			data, _ := fs.ReadFile(subFS, "index.html")
+			c.Data(http.StatusOK, "text/html; charset=utf-8", data)
 		})
 	})
 }
