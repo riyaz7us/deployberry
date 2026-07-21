@@ -338,8 +338,9 @@ func runExec() {
 	}
 	
 	var cmd *exec.Cmd
-	cmdString := fmt.Sprintf("source /etc/deployberry/env.sh 2>/dev/null && cd %s && exec %s", 
-		EscapeShellArg(pwd), strings.Join(EscapeShellArgs(args), " "))
+	escapedPwd := EscapeShellArg(pwd)
+	cmdString := fmt.Sprintf("source /etc/deployberry/env.sh 2>/dev/null && { cd %s 2>/dev/null || { echo \"Warning: Directory %s is not accessible. Falling back to home directory.\" >&2; cd ~panel_apps 2>/dev/null || cd /; }; } && exec %s", 
+		escapedPwd, escapedPwd, strings.Join(EscapeShellArgs(args), " "))
 
 	if os.Getuid() != 0 {
 		cmd = exec.Command("sudo", "-u", "panel_apps", "bash", "-c", cmdString)
