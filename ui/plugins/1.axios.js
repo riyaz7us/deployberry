@@ -3,7 +3,11 @@ import { useAuthStore } from "~/store/index";
 export default defineNuxtPlugin({
   parallel: true,
   setup(nuxtApp) {
-    const defaultUrl = nuxtApp.$config.public.BASE_URL;
+    let defaultUrl = nuxtApp.$config.public.BASE_URL;
+
+    if (typeof window !== "undefined" && !import.meta.dev) {
+      defaultUrl = window.location.origin;
+    }
 
     const baseFetch = $fetch.create({
       baseURL: defaultUrl,
