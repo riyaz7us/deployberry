@@ -154,8 +154,8 @@ func ExecuteAsAppUser(command string, appPath string) BashResult {
 		fullCmd = fmt.Sprintf("%s && %s", envLoader, command)
 	}
 
-	suCmd := fmt.Sprintf("su -s /bin/bash panel_apps -c %s", EscapeShellArg(fullCmd))
-	return ExecuteBash(suCmd, false, ExecuteBashOptions{})
+	sudoCmd := fmt.Sprintf("sudo -u panel_apps -H bash -c %s", EscapeShellArg(fullCmd))
+	return ExecuteBash(sudoCmd, false, ExecuteBashOptions{})
 }
 
 // IsServiceActive checks if a systemd service is currently active.

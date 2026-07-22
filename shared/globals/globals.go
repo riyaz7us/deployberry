@@ -21,7 +21,10 @@ func init() {
 	// Check if running in development mode
 	if os.Getenv("ENV") == "dev" {
 		// Development: Everything in .dev directory
-		baseDir := "../.dev"
+		baseDir, err := filepath.Abs("../.dev")
+		if err != nil {
+			baseDir = "../.dev"
+		}
 
 		BASE_DIR = baseDir
 		DATA_DIR = filepath.Join(baseDir, "data")
@@ -31,7 +34,7 @@ func init() {
 		LOG_DIR = filepath.Join(baseDir, "logs")
 		DB_PATH = filepath.Join(baseDir, "data/deployberry.db")
 		REGISTRY_PATH = filepath.Join(baseDir, "../deployberry-manifests")
-		ENV_PATH = filepath.Join(baseDir, "env.sh")
+		ENV_PATH = "/etc/deployberry/env.sh"
 
 		// Create directories if they don't exist
 		os.MkdirAll(DATA_DIR, 0755)
