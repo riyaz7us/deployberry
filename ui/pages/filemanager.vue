@@ -142,6 +142,7 @@ const editingFilePath = ref(null);
 const { $axiosApi } = useNuxtApp();
 
 const isEditableFile = (fileName) => {
+  if (!fileName) return false;
   const editableExtensions = ["txt", "html", "css", "js", "json", "md", "xml", "yaml", "yml", "php", "py", "java", "rb", "go", "rs", "swift", "kt", "sh", "sql"];
   const extension = fileName.split(".").pop().toLowerCase();
   return editableExtensions.includes(extension);
@@ -176,6 +177,7 @@ const loadFiles = async () => {
 };
 
 const updateBreadcrumbs = () => {
+  if (!curPath.value) return;
   const parts = curPath.value.split("/").filter((p) => p);
   breadcrumbs.value = parts.map((part, index) => ({
     name: part,
