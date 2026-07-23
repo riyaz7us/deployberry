@@ -9,25 +9,25 @@
     "lint": "eslint \"/**/*.{js,vue}\""
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.22",
-    "eslint": "^9.39.1",
+    "autoprefixer": "^10.5.4",
+    "eslint": "^9.39.5",
     "eslint-plugin-vue": "^9.33.0",
-    "nuxt": "^4.2.1"
+    "nuxt": "^4.5.0"
   },
   "dependencies": {
-    "@nuxt/icon": "^2.1.0",
+    "@nuxt/icon": "^2.3.1",
     "@nuxtjs/google-fonts": "^3.2.0",
     "@pinia/nuxt": "^0.5.5",
-    "@tailwindcss/vite": "^4.1.17",
-    "@vueup/vue-quill": "^1.2.0",
-    "daisyui": "^5.5.5",
-    "dayjs": "^1.11.19",
-    "nuxt-snackbar": "^1.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vueup/vue-quill": "^1.5.5",
+    "daisyui": "^5.7.0",
+    "dayjs": "^1.11.21",
+    "nuxt-snackbar": "^1.4.0",
     "pinia": "^2.3.1",
-    "sass": "^1.94.2",
+    "sass": "^1.101.6",
     "sass-loader": "^13.3.3",
-    "tailwindcss": "^4.1.17",
-    "theme-change": "^2.5.0",
+    "tailwindcss": "^4.3.3",
+    "theme-change": "^2.5.2",
     "uuid": "^9.0.1"
   },
   "pkg": {
