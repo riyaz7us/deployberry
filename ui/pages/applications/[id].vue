@@ -424,6 +424,9 @@
 
 <script setup>
 const application = ref(null)
+useHead({
+  title: () => application.value?.display_name ? `App: ${application.value.display_name}` : 'Application Details'
+})
 const commands = ref(null)
 const editableFiles = ref([])
 const appStatus = ref(null)

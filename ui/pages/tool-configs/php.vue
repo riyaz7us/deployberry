@@ -287,6 +287,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'PHP Configuration' })
 const snackbar = useSnackbar()
 
 // State
