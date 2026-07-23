@@ -18,10 +18,13 @@ func CheckResourceUsage(c *gin.Context) {
 	c.Writer.Header().Set("Cache-Control", "no-cache")
 	c.Writer.Header().Set("Connection", "keep-alive")
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-
+	isFirst := true
 	c.Stream(func(w io.Writer) bool {
-		// Simulate sending an event every 2 seconds
-		time.Sleep(7 * time.Second)
+		if !isFirst {
+			time.Sleep(7 * time.Second)
+		} else {
+			isFirst = false
+		}
 		stats, _ := checkResourceUsage()
 
 		jsonData, err := json.Marshal(stats)
@@ -32,7 +35,9 @@ func CheckResourceUsage(c *gin.Context) {
 		// SSE requires the format: "data: <your-message>\n\n"
 		message := fmt.Sprintf("data: %v\n\n", string(jsonData))
 
+		fmt.Println("[SSE] Sending stats event...")
 		if _, err := w.Write([]byte(message)); err != nil {
+			fmt.Printf("[SSE] Connection closed/broken: %v\n", err)
 			return false // Stop streaming if connection is broken
 		}
 		return true // Continue streaming
