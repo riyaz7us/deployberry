@@ -115,6 +115,7 @@
 </template>
 <script setup>
 useHead({
+  title: "File Manager",
   link: [{ rel: "stylesheet", href: "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/default.min.css" }],
   script: [
     { src: "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js" }

@@ -322,6 +322,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'SQL Manager' })
 const { $axiosApi } = useNuxtApp()
 const router = useRouter()
 

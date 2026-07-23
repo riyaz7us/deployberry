@@ -116,6 +116,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'Database Backups' })
 import { ref, onMounted } from 'vue'
 const { $axiosApi } = useNuxtApp()
 const route = useRoute()

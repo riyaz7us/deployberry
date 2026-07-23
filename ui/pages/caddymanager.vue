@@ -200,6 +200,7 @@
 
 <script setup>
 useHead({
+  title: "Caddy Manager",
   link: [
     { rel: "stylesheet", href: "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/default.min.css" }
   ],

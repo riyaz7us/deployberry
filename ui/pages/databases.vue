@@ -122,6 +122,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'Database Servers' })
 const snackbar = useSnackbar()
 
 const versionsState = ref({});

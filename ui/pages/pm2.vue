@@ -171,6 +171,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'Process Manager (PM2)' })
 const pm2Installed = ref(false);
 const loadingInstallCheck = ref(true);
 const loading = ref(false);

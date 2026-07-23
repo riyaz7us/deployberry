@@ -113,6 +113,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'Dashboard' })
 const links = [
   {
     subheader: "Web Server Management",

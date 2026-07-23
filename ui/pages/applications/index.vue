@@ -159,6 +159,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'Applications' })
 const applications = ref([])
 const loading = ref(true)
 const searchQuery = ref('')

@@ -75,6 +75,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'Container Registry' })
 const apps = ref([]);
 const loading = ref(true);
 const error = ref('');

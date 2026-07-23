@@ -108,6 +108,7 @@
 </template>
 
 <script setup>
+useHead({ title: 'Programming Languages' })
 const snackbar = useSnackbar();
 
 const versionsState = ref({});

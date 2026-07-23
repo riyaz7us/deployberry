@@ -292,6 +292,10 @@ const route = useRoute();
 const router = useRouter();
 const slug = route.params.slug;
 
+useHead({
+  title: () => requirements.value?.app ? `Deploy ${requirements.value.app}` : `Deploy Container App`
+});
+
 // State Variables
 const loading = ref(true);
 const error = ref('');

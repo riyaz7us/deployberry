@@ -299,6 +299,10 @@
 const route = useRoute();
 const slug = route.params.slug;
 
+useHead({
+  title: () => requirements.value?.app ? `Install ${requirements.value.app}` : `Install Application`
+});
+
 // Reactive state
 const loading = ref(true);
 const error = ref('');

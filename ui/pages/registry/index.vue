@@ -13,6 +13,7 @@
   </div>
 </template>
 <script setup>
+useHead({ title: 'Application Registry' })
 const apps = ref([]);
 onMounted(() => {
   useNuxtApp()
