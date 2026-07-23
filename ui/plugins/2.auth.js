@@ -18,13 +18,13 @@ export default defineNuxtPlugin((nuxtApp) => {
           return false;
         }
         return false;
-      }
+      },
     );
   };
 
   //Universal Auth Guard
-  let checkLogin = (softCheck=false) => {
-    return new Promise(async(resolve, reject) => {
+  let checkLogin = (softCheck = false) => {
+    return new Promise(async (resolve, reject) => {
       let token = localStorage.getItem("token");
       if (!token) {
         reject("Logged Out");
@@ -56,27 +56,27 @@ export default defineNuxtPlugin((nuxtApp) => {
           },
           (err) => {
             reject(createError("Error Logging In: " + err));
-            if(err.response?.status===401){
-              useToaster('Please Recheck Your E-Mail & Password!',"bg-red-500");
+            if (err.response?.status === 401) {
+              useToaster("Please Recheck Your E-Mail & Password!", "bg-red-500");
             } else {
-              useToaster('An Error Occured!',"bg-red-500");
+              useToaster("An Error Occured!", "bg-red-500");
             }
-          }
+          },
         );
     });
   };
-  let logout = ()=>{
-    navigateTo("/");
+  let logout = () => {
+    navigateTo("/login");
     localStorage.removeItem("token");
     useAuthStore().setUser(null);
-    useNuxtApp().$bus.$emit('toaster',['Logged Out!','info']);
-  }
+    useNuxtApp().$bus.$emit("toaster", ["Logged Out!", "info"]);
+  };
   return {
     provide: {
       login,
       getUser,
       checkLogin,
-      logout
+      logout,
     },
   };
 });

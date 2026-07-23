@@ -15,6 +15,7 @@
         </button>
         <Icon name="mdi:palette" @click="changeColor()"
           class="text-2xl cursor-pointer text-primary hover:scale-110 transition-transform" />
+        <Icon name="mdi:power" class="text-2xl cursor-pointer hover:scale-110 transition-transform text-error" @click="useNuxtApp().$logout()" />
       </div>
     </header>
     <NuxtSnackbar />
