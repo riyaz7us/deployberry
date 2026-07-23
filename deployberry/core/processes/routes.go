@@ -16,7 +16,7 @@ func RegisterRoutes(r *gin.RouterGroup) {
 		pm2.POST("/process/restart", Pm2ProcessRestart)
 		pm2.POST("/process/delete", Pm2ProcessDelete)
 		pm2.POST("/process/create", Pm2ProcessStart)
-		pm2.POST("/process/save", Pm2ProcessSave)
-		pm2.POST("/process/resurrect", Pm2ProcessResurrect)
+		pm2.POST("/save", Pm2Save)
+		pm2.POST("/resurrect", Pm2Resurrect)
 	}
 }

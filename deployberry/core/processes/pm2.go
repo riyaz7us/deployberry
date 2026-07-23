@@ -127,7 +127,7 @@ func Pm2ProcessRestart(c *gin.Context) {
 	c.JSON(200, gin.H{"success": true})
 }
 
-func Pm2ProcessSave(c *gin.Context) {
+func Pm2Save(c *gin.Context) {
 	if err := pm2Command("save"); err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
@@ -135,7 +135,7 @@ func Pm2ProcessSave(c *gin.Context) {
 	c.JSON(200, gin.H{"success": true})
 }
 
-func Pm2ProcessResurrect(c *gin.Context) {
+func Pm2Resurrect(c *gin.Context) {
 	if err := pm2Command("resurrect"); err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
